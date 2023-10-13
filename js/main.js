@@ -32,11 +32,11 @@ const cuteCustomStyles = `
 #cute-comfy #batchCountInputNumber
 {
     width: 50px;
-    height: 26px text-align: center;
+    height: 26px;
+    text-align: center;
     background-color: #d4c4e3;
     border: none;
     color: #241a2d;
-    text-align: center;
 }
 
 .emoji
@@ -125,6 +125,11 @@ const cuteCustomStyles = `
 {
     background-color: #a66ed8;
     color: #241a2d;
+}
+
+button.cute-comfy-button > svg
+{
+    margin: 0 0.2rem;
 }
 
 .cute-comfy-menu-button:hover
