@@ -1,1 +1,5 @@
 colorama
+pyyaml
+watchdog
+pillow
+requests
