@@ -1,4 +1,4 @@
-<p align="center">![Cute Comfy Logo](https://raw.githubusercontent.com/zer0TF/cute-comfy/master/assets/cute_comfy_logo_big.png)</p>
+<p align="center"><img src="https://raw.githubusercontent.com/zer0TF/cute-comfy/master/assets/cute_comfy_logo_big.png" alt="Cute Comfy Logo" /></p>
 
 # 💜 Cute Comfy 💜
 
