@@ -31,9 +31,10 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Cute.Placeholder": "Cute Comfy Placeholder",
 }
 
-__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
+WEB_DIRECTORY = "./js"
 
-update_javascript()
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS', 'WEB_DIRECTORY']
+
 init_watcher()
 
 print(f'{Style.BRIGHT}{Fore.LIGHTMAGENTA_EX} °º¤ø,¸¸,ø¤º° Cute Comfy: {Fore.LIGHTGREEN_EX}Loaded! {Style.RESET_ALL}{Style.BRIGHT}{Fore.LIGHTMAGENTA_EX}°º¤ø,¸¸,ø¤º°{Style.RESET_ALL}{Fore.RESET}')
