@@ -2,7 +2,6 @@ import __main__
 
 from colorama import Style, Fore
 
-from .utils import update_javascript
 from .watcher import init_watcher
 
 # Placeholder node so that Comfy doesn't throw an error on load
