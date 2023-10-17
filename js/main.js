@@ -489,6 +489,7 @@ async function initCuteness() {
     queueTop.title = "Queue Next";
     
     var cogBtn = moveElement('.comfy-settings-btn', ".cute-comfy-top-bar-right", "cute-comfy-button", true);
+    cogBtn.classList.remove('comfy-settings-btn');
     cogBtn.innerHTML = `<i class="fas fa-cog"></i>`;
     cogBtn.title = "ComfyUI Settings";
     
