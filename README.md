@@ -1,3 +1,5 @@
+<p align="center">![Cute Comfy Logo](https://raw.githubusercontent.com/zer0TF/cute-comfy/master/assets/cute_comfy_logo_big.png)</p>
+
 # 💜 Cute Comfy 💜
 
 Makes ComfyUI cute and adorable (and TOTALLY easier to use, too! ^_^).
@@ -131,3 +133,8 @@ Modify these settings to suit your needs!
 
 There is no setup - it's just on by default. 💜 I may make it toggle-able in a future update.
 
+## 🟣 Credits and Acknowledgements
+
+* Logos graciously provided by @HarroweD via [Civitai on Discord](https://discord.gg/civitai)
+* Icons by Font Awesome
+* I'd be lying if I said GPT-4 didn't help out a bit, too 😉
