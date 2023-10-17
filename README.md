@@ -8,13 +8,15 @@ Makes ComfyUI cute and adorable (and TOTALLY easier to use, too! ^_^).
 
 ## 🟣 Installation
 
-Coming soon to Comfy Manager!
+### Easy Installation
 
-### Manual Installation Instructions
+**We are listed in the Comfy Manager custom node list!**
 
-Temporary installation instructions while we wait to be added to the Comfy Manager repository.
+First, install **[ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)** if you have not already.
 
-**Note:** You may need to manually undo these steps at a later date, in order to convert over to the Comfy Manager version when that is released.
+Then, go to the custom node store and search for "Cute". Click **Install** next to Cute Comfy! That's it! 😄
+
+### Manual / Advanced
 
 To install:
 
@@ -35,6 +37,13 @@ Cute Comfy: 👁️ I'm keeping an eye on: [[ YOUR COMFY OUTPUT FOLDER HERE ]]
 ```
 
 Then it's up and running! 👍
+
+## 🟣 To-do List
+
+* [x] Style the main Comfy user interface
+* [ ] Style the Comfy Settings dialog
+* [ ] Style the Comfy Main Menu
+* [ ] Style the Comfy Manager custom node list
 
 ## 🟣 Features
 
