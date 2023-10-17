@@ -462,6 +462,8 @@ async function initCuteness() {
     document.querySelector(".comfy-menu label").parentNode.style.display = "none";
     document.querySelector(".comfy-menu-btns").style.display = "none";
 
+    // Settings cog button
+    
     // Right Side
     var infiniteCheck = moveElement('#autoQueueCheckbox', ".cute-comfy-top-bar-right", null, true);
     surroundElement('#autoQueueCheckbox', "div");
@@ -470,7 +472,7 @@ async function initCuteness() {
     infLabel.htmlFor = "autoQueueCheckbox";
     infLabel.innerHTML = "Infinite Gen";
     infiniteCheck.after(infLabel);
-
+    
     var bcount = moveElement('#batchCountInputNumber', ".cute-comfy-top-bar-right", null, true);
     var bcountLabeal = document.createElement("label");
     bcountLabeal.htmlFor = "batchCountInputNumber";
@@ -481,12 +483,15 @@ async function initCuteness() {
     var queue = moveElement("#queue-button", ".cute-comfy-top-bar-right", "cute-comfy-button", true);
     queue.innerHTML = `<i class="fas fa-play"></i> Queue`;
     queue.title = "Queue Workflow";
-
+    
     var queueTop = moveElement("#queue-front-button", ".cute-comfy-top-bar-right", "cute-comfy-button", true);
     queueTop.innerHTML = `<i class="fas fa-arrow-up-wide-short"></i>`;
     queueTop.title = "Queue Next";
-    queueTop.classList.add("emoji");
-
+    
+    var cogBtn = moveElement('.comfy-settings-btn', ".cute-comfy-top-bar-right", "cute-comfy-button", true);
+    cogBtn.innerHTML = `<i class="fas fa-cog"></i>`;
+    cogBtn.title = "ComfyUI Settings";
+    
     // Popup menu
     var menu = document.createElement("div");
     menu.classList.add("cute-comfy-pop-menu");
