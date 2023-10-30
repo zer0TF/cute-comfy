@@ -777,8 +777,6 @@ async function initCuteness() {
     spacer.classList.add('cute-comfy-spacer');
     document.querySelectorAll('.cute-comfy-list')[1].after(spacer);
 
-    let bool = 
-
     function applyMutableChanges(mutations, observer, selector)
     {
         observer.disconnect();
@@ -883,7 +881,7 @@ async function initCuteness() {
         if (!cute_comfy_menu_init)
         {
             cute_comfy_menu_init = true;
-            
+
             // Inside .cute-comfy-menu, find a button with the innertext of "Manage"
             var manageBtn = Array.from(document.querySelectorAll(".cute-comfy-menu button")).filter((btn) => btn.innerText.toLowerCase().includes("manager"));
             if (manageBtn.length > 0)
