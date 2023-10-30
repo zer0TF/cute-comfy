@@ -15,12 +15,16 @@ const cuteCustomStyles = `
     --cute-comfy-bar-height: 50px;
     --cute-comfy-sidebar-width: 200px;
     --cute-comfy-sidebar-bg: #49355a;
+    --cute-comfy-modal-border: #9d6fb9;
+    --cute-comfy-button-bg: #a66ed8;
+
+    --cute-comfy-fonts: 'Comfortaa', sans-serif !important;
 }
 
 #cute-comfy,
 #cute-comfy *
 {
-    font-family: 'Comfortaa', sans-serif !important;
+    font-family: var(--cute-comfy-fonts);
     font-size: 1rem;
 }
 
@@ -57,7 +61,6 @@ const cuteCustomStyles = `
     background: rgb(119, 86, 148);
     background: linear-gradient(135deg, rgba(119, 86, 148, 1) 20%, rgba(36, 26, 45, 1) 100%);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 100;
 }
 
 .cute-comfy-top-bar-left
@@ -124,7 +127,7 @@ const cuteCustomStyles = `
 
 .cute-comfy-button:hover
 {
-    background-color: #a66ed8;
+    background-color: var(--cute-comfy-button-bg);
     color: #241a2d;
 }
 
@@ -353,6 +356,168 @@ button:hover > .cute-hover-green
     position: relative;
 }
 
+/* Modals! */
+.comfy-modal
+{
+    background-color: var(--cute-comfy-sidebar-bg);
+    border: 1px solid var(--cute-comfy-modal-border);
+    box-shadow: 4px 4px 18px 5px rgba(0, 0, 0, 0.7);
+    border-radius: 3px;
+    
+    font-family: var(--cute-comfy-fonts);
+    text-align: center;
+}
+
+.comfy-modal:before
+{
+    content: 'CUTE!';
+    
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: -30px;
+    
+    background-color: rgb(239,51,145);
+    color: white;
+    line-height: 1.2;
+    font-weight: 600;
+    overflow: hidden;
+    
+    padding: 3px 40px 1px;
+    transform-origin: 50%;
+    transform: rotate(-35deg);
+}
+
+.comfy-modal .comfy-modal-content hr
+{
+    height: 1px;
+    border: none;
+    background-color: rgb(239,51,145);
+    margin: 1rem -4rem;
+    width: 200%;
+}
+
+.comfy-modal .comfy-modal-content br + hr
+{
+    margin-top: 0;
+}
+
+.comfy-modal .comfy-modal-content hr + br
+{
+    display: none;
+}
+
+.comfy-modal .comfy-modal-content
+{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+}
+
+.comfy-modal .comfy-modal-content > tr:first-of-type
+{
+    background-color: unset !important;
+    padding: 0 !important;
+    margin-top: 1rem !important;
+    height: unset !important;
+}
+
+.comfy-modal .comfy-modal-content button
+{
+    display: inline !important;
+    width: unset !important;
+    background-color: transparent !important;
+    border: unset !important;
+    box-shadow: unset !important;
+    border-radius: unset !important;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    color: white;
+}
+
+.comfy-modal .comfy-modal-content button:hover
+{
+    background-color: var(--cute-comfy-button-bg) !important;
+    color: #111;
+}
+
+.comfy-modal .comfy-modal-content button > svg
+{
+    margin-right: 0.5rem;
+}
+
+.comfy-modal .comfy-modal-content select
+{
+    background-color: rgba(0, 0, 0, 0.1);
+    color: white;
+    border: 1px solid hotpink;
+    margin: 0.5rem 0;
+    padding: 0.3rem;
+    border-radius: 3px;
+    font-family: var(--cute-comfy-fonts);
+}
+
+.comfy-modal .comfy-modal-content select > option
+{
+    background-color: white;
+    color: #222;
+}
+
+/* Main Settings Dialog */
+#comfy-settings-dialog
+{
+    border: 2px solid #b04480;
+    border-radius: 3px;
+    
+    max-height: 80vh !important;
+    height: 80vh !important;
+    top: 5vh !important;
+    
+    box-shadow: 6px 6px 20px 4px rgba(0, 0, 0, 0.6);
+    
+    overflow-y: auto;
+    overflow-x: visible;
+}
+
+#comfy-settings-dialog,
+#comfy-settings-dialog tr,
+#comfy-settings-dialog caption
+{
+    font-family: var(--cute-comfy-fonts);
+    background-color: var(--cute-comfy-sidebar-bg);
+}
+
+#comfy-settings-dialog td
+{
+    border: none !important;
+}
+
+#comfy-settings-dialog caption
+{
+    background-color: #2c2036;
+    color: white !important;
+}
+
+#comfy-settings-dialog tr:nth-child(2n-1)
+{
+    background-color: #423051;
+}
+
+#comfy-settings-dialog tr td
+{
+    font-size: 14px;
+}
+
+#comfy-settings-dialog table > caption,
+#comfy-settings-dialog table > button
+{
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    
+    font-size: 1.2rem;
+}
+
 /* Overrides the built-in media query for small screens, argh...! */
 @media only screen and (max-height: 850px)
 {
@@ -371,7 +536,13 @@ button:hover > .cute-hover-green
 
 function moveElement(elementSelector, destinationParentSelector, newClass, append = false)
 {
-    let element = document.querySelector(elementSelector);
+    if (typeof elementSelector !== "string" && typeof elementSelector !== "object")
+    {
+        console.warn("moveElement: elementSelector must be a string. Instead, got: " + (typeof elementSelector), elementSelector);
+        return null;
+    }
+
+    let element = typeof elementSelector === 'object' ? elementSelector : document.querySelector(elementSelector);
     if (newClass)
     {
         element.classList.add(newClass);
@@ -403,17 +574,32 @@ function surroundElement(elementSelector, surroundElementName)
 }
 
 // Blocks until the element is visible
-function waitForElementVisibility(selector, timeout = 5000)
+function waitForElementVisibility(selector, timeout = 5000, all = false)
 {
     let start = Date.now();
-    let element = document.querySelector(selector);
-    while (element == null || element.offsetParent === null)
+    if (!all)
     {
-        if (Date.now() - start > timeout)
+        let element = document.querySelector(selector);
+        while (element == null || element.offsetParent === null)
         {
-            throw new Error(`Timed out waiting for element ${selector} to appear.`);
+            if (Date.now() - start > timeout)
+            {
+                throw new Error(`Timed out waiting for element ${selector} to appear.`);
+            }
+            element = document.querySelector(selector);
         }
-        element = document.querySelector(selector);
+    }
+    else
+    {
+        let elements = document.querySelectorAll(selector);
+        while (elements.length == 0)
+        {
+            if (Date.now() - start > timeout)
+            {
+                throw new Error(`Timed out waiting for element ${selector} to appear.`);
+            }
+            elements = document.querySelectorAll(selector);
+        }
     }
 }
 
@@ -470,7 +656,7 @@ async function initCuteness() {
     document.querySelector(".comfy-menu-btns").style.display = "none";
 
     // Settings cog button
-    
+
     // Right Side
     var infiniteCheck = moveElement('#autoQueueCheckbox', ".cute-comfy-top-bar-right", null, true);
     surroundElement('#autoQueueCheckbox', "div");
@@ -494,8 +680,8 @@ async function initCuteness() {
     var queueTop = moveElement("#queue-front-button", ".cute-comfy-top-bar-right", "cute-comfy-button", true);
     queueTop.innerHTML = `<i class="fas fa-arrow-up-wide-short"></i>`;
     queueTop.title = "Queue Next";
-
-    // Custom addon support
+    
+    // Custom addon support - find any .comfy-settings-btn that does not have a ⚙️ in the inner text
     var otherButtons = document.querySelectorAll(".comfy-settings-btn");
     for (let i = 0; i < otherButtons.length; i++) {
         if (otherButtons[i].innerHTML.includes("⚙️")) {
@@ -524,7 +710,7 @@ async function initCuteness() {
     btn.title = "Upload a workflow JSON file. Will replace the current workflow.";
     btn = moveElement('#comfy-refresh-button', ".cute-comfy-top-bar-left", "cute-comfy-button", true);
     btn.innerHTML = `<i class="fas fa-sync"></i> Refresh`;
-    btn.title = "Refreshes  metadatata (selection lists, etc) inside nodes.";
+    btn.title = "Refreshes metadatata (selection lists, etc) inside nodes.";
 
     // Append the menu
     document.querySelector(".cute-comfy-top-bar-left").appendChild(menu);
@@ -694,6 +880,75 @@ async function initCuteness() {
         childList: true,
         subtree: true
     });
+
+    // Inside .cute-comfy-menu, find a button with the innertext of "Manage"
+    var manageBtn = Array.from(document.querySelectorAll(".cute-comfy-menu button")).filter((btn) => btn.innerText.toLowerCase().includes("manager"));
+    if (manageBtn.length > 0)
+    {
+        // Install a click handler on the button
+        manageBtn[0].addEventListener("click", (e) =>
+        {
+            setTimeout(() =>
+            {
+                waitForElementVisibility(".comfy-modal-content button", 5000, true);
+
+                // Add icons to the buttons on the main menu.
+                // Loop through each button element inside .comfy-modal-content
+                var buttons = document.querySelectorAll(".comfy-modal .comfy-modal-content button");
+                for (let i = 0; i < buttons.length; i++)
+                {
+                    // Switch on the button's inner text
+                    switch (buttons[i].innerText.trim().toLowerCase())
+                    {
+                        case "install custom nodes":
+                            buttons[i].innerHTML = `<i class="fas fa-cubes"></i> Manage Custom Nodes`;
+                            buttons[i].title = "Opens the node manager where you can install, update, and manage custom nodes.";
+                            break;
+                        case "install missing custom nodes":
+                            buttons[i].innerHTML = `<i class="fas fa-file-circle-question"></i> Install Missing Custom Nodes`;
+                            buttons[i].title = "If your workflow has any missing nodes, this will attempt to install them.";
+                            break;
+                        case "install models":
+                            buttons[i].innerHTML = `<i class="fas fa-circle-nodes"></i> Install Models`;
+                            buttons[i].title = "Browse and install models (checkpoints, upscalers, embeddings, etc).";
+                            break;
+                        case "update all":
+                            buttons[i].innerHTML = `<i class="fas fa-angles-up"></i> Update ComfyUI + Extensions`;
+                            buttons[i].title = "Updates everything (ComfyUI and any installed extensions).";
+                            break;
+                        case "update comfyui":
+                            buttons[i].innerHTML = `<i class="fas fa-angle-up"></i> Update ComfyUI`;
+                            buttons[i].title = "Updates ComfyUI.";
+                            break;
+                        case "fetch updates":
+                            buttons[i].innerHTML = `<i class="fas fa-refresh"></i> Check for Updates`;
+                            buttons[i].title = "Attempts to fetch any updates for any installed custom extensions.";
+                            break;
+                        case "alternatives of a1111":
+                            buttons[i].innerHTML = `<i class="fas fa-person-circle-question"></i> Custom Node Alternatives to A1111`;
+                            buttons[i].title = "View a filtered list of custom nodes that substitutes functionality in Automatic1111's Stable Diffusion Web UI.";
+                            break;
+                        case "comfyui community manual":
+                            buttons[i].innerHTML = `<i class="fas fa-globe"></i> ComfyUI Community Manual <i class="fas fa-up-right-from-square fa-2xs"></i>`;
+                            buttons[i].title = "Open the ComfyUI documentation.";
+                            break;
+                        case "comfyui workflow gallery":
+                            buttons[i].innerHTML = `<i class="fas fa-table-cells"></i> ComfyUI Workflow Gallery <i class="fas fa-up-right-from-square fa-2xs"></i>`;
+                            buttons[i].title = "Open the ComfyUI example workflow gallery.";
+                            break;
+                        case "comfyui nodes info":
+                            buttons[i].innerHTML = `<i class="fas fa-square-share-nodes"></i> ComfyUI Nodes Info <i class="fas fa-up-right-from-square fa-2xs"></i>`;
+                            buttons[i].title = "Open the documentation for various node types.";
+                            break;
+                        case "close":
+                            buttons[i].innerHTML = `<i class="fas fa-xmark"></i> Close`;
+                            buttons[i].title = "Close this popup.";
+                            break;
+                    }
+                }
+            }, 10);
+        });
+    }
 
     console.log("🟣 ALL DONE! ^_^");
     console.groupEnd();
