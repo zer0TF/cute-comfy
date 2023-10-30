@@ -57,6 +57,7 @@ const cuteCustomStyles = `
     background: rgb(119, 86, 148);
     background: linear-gradient(135deg, rgba(119, 86, 148, 1) 20%, rgba(36, 26, 45, 1) 100%);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 }
 
 .cute-comfy-top-bar-left
