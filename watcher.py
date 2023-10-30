@@ -9,7 +9,10 @@ import requests
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 from watchdog import events, observers
-from .utils import cuteprint
+try:
+    from .utils import cuteprint
+except ImportError:
+    from utils import cuteprint
 
 # PNG files are the only files that can carry metadata inside AND the only ones that we can parse/support (for now).
 ALLOWED_EXTS = ['png']
@@ -60,11 +63,11 @@ SCHEDULER_NAME_MAP = {
 
 Verbose = False
 
-def init_watcher():
+def init_watcher(cfg_path_override = None):
     global Verbose
 
     cur_dir = os.path.dirname(os.path.realpath(__file__))
-    config_path = os.path.join(cur_dir, 'config.yaml')
+    config_path = os.path.join(cfg_path_override, 'config.yaml') if cfg_path_override is not None else os.path.join(cur_dir, 'config.yaml')
 
     # If the file does not exist, this is a first-time run and we need to write the default one.
     if not os.path.exists(config_path):
@@ -76,8 +79,9 @@ def init_watcher():
     try:
         with open(config_path, 'r') as f:
             config_dict = yaml.load(f, Loader=yaml.FullLoader)
-    except:
+    except Exception as e:
         cuteprint('❌ Failed to load config.yaml. Please check the file for syntax errors.')
+        cuteprint('❌ Error: ' + str(e))
         return
     
     if not validate_config(config_dict):
@@ -146,7 +150,12 @@ def update_metadata(file, config_dict):
         prompt_negative = get_metadata_clip_text(nodelist, NODE_TITLE_PREFERRED_NEGATIVE)
         ckpt_sha256 = get_metadata_ckpt_sha256(nodelist)
         lora_ckpt_sha256_list = get_lora_ckpt_sha256(nodelist)
-        sampler, seed, steps, cfg = get_metadata_sampler(nodelist)
+        sampler_data = get_metadata_sampler(nodelist)
+        if sampler_data is not None:
+            sampler, seed, steps, cfg = sampler_data
+        else:
+            sampler, seed, steps, cfg = None, None, None, None
+            cuteprint(f'👀 Warning: Failed to retrieve Sampler metadata.') if Verbose else None
 
         # Build the Hashes JSON object
         hashes = {}
@@ -201,12 +210,12 @@ def get_metadata_sampler(nodelist):
         steps = int(sampler['widgets_values'][2])
         cfg = int(sampler['widgets_values'][3])
     
-    # If widgets_values has 10 items, it's a KSampler (Efficient) node.
-    elif len(sampler['widgets_values']) == 10:
-        name, scheduler = sampler['widgets_values'][5], sampler['widgets_values'][6]
-        seed = sampler['widgets_values'][1]
-        steps = int(sampler['widgets_values'][3])
-        cfg = int(sampler['widgets_values'][4])
+    # If widgets_values has 9 items, it's a KSampler (Efficient) node.
+    elif len(sampler['widgets_values']) == 9:
+        name, scheduler = sampler['widgets_values'][4], sampler['widgets_values'][5]
+        seed = sampler['widgets_values'][0]
+        steps = int(sampler['widgets_values'][2])
+        cfg = int(sampler['widgets_values'][3])
 
     # If widgets_values has any other number of items, it's not a KSampler node.
     else:
