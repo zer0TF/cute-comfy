@@ -574,23 +574,11 @@ function surroundElement(elementSelector, surroundElementName)
 }
 
 // Blocks until the element is visible
-function waitForElementVisibility(selector, timeout = 5000, all = false)
+function waitForElementVisibility(selector, timeout = 5000, all = false, expr = false)
 {
     let start = Date.now();
-    if (!all)
-    {
-        let element = document.querySelector(selector);
-        while (element == null || element.offsetParent === null)
-        {
-            if (Date.now() - start > timeout)
-            {
-                throw new Error(`Timed out waiting for element ${selector} to appear.`);
-            }
-            element = document.querySelector(selector);
-        }
-    }
-    else
-    {
+    if (all)
+    {        
         let elements = document.querySelectorAll(selector);
         while (elements.length == 0)
         {
@@ -599,6 +587,31 @@ function waitForElementVisibility(selector, timeout = 5000, all = false)
                 throw new Error(`Timed out waiting for element ${selector} to appear.`);
             }
             elements = document.querySelectorAll(selector);
+        }
+    }
+    else if (expr)
+    {
+        let xExpr = document.createExpression(selector);
+        let elements = xExpr.evaluate(document, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+        while (elements.snapshotLength == 0)
+        {
+            if (Date.now() - start > timeout)
+            {
+                throw new Error(`Timed out waiting for element ${selector} to appear.`);
+            }
+            elements = xExpr.evaluate(document, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+        }
+    }
+    else
+    {        
+        let element = document.querySelector(selector);
+        while (element == null || element.offsetParent === null)
+        {
+            if (Date.now() - start > timeout)
+            {
+                throw new Error(`Timed out waiting for element ${selector} to appear.`);
+            }
+            element = document.querySelector(selector);
         }
     }
 }
@@ -880,6 +893,8 @@ async function initCuteness() {
         childList: true,
         subtree: true
     });
+
+    waitForElementVisibility("//div[contains(concat(' ', @class, ' '), ' comfy-menu ')]/button[contains(., 'Manager')]", 5000, false, true);
 
     // Inside .cute-comfy-menu, find a button with the innertext of "Manage"
     var manageBtn = Array.from(document.querySelectorAll(".cute-comfy-menu button")).filter((btn) => btn.innerText.toLowerCase().includes("manager"));
