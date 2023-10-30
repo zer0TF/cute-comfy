@@ -361,6 +361,12 @@ button:hover > .cute-hover-green
         top: var(--cute-comfy-bar-height) !important;
     }
 }
+
+/* Custom addons */
+.pysssss-image-feed--top, .pysssss-image-feed--bottom
+{
+    width: calc(100vw - var(--cute-comfy-sidebar-width)) !important;
+}
 `;
 
 function moveElement(elementSelector, destinationParentSelector, newClass, append = false)
@@ -488,7 +494,17 @@ async function initCuteness() {
     var queueTop = moveElement("#queue-front-button", ".cute-comfy-top-bar-right", "cute-comfy-button", true);
     queueTop.innerHTML = `<i class="fas fa-arrow-up-wide-short"></i>`;
     queueTop.title = "Queue Next";
-    
+
+    // Custom addon support
+    var otherButtons = document.querySelectorAll(".comfy-settings-btn");
+    for (let i = 0; i < otherButtons.length; i++) {
+        if (otherButtons[i].innerHTML.includes("⚙️")) {
+            continue;
+        }
+        let btn = moveElement(otherButtons[i], ".cute-comfy-top-bar-right", "cute-comfy-button");
+        btn.classList.remove("comfy-settings-btn");
+    }
+
     var cogBtn = moveElement('.comfy-settings-btn', ".cute-comfy-top-bar-right", "cute-comfy-button", true);
     cogBtn.classList.remove('comfy-settings-btn');
     cogBtn.innerHTML = `<i class="fas fa-cog"></i>`;
@@ -506,9 +522,9 @@ async function initCuteness() {
     btn = moveElement('#comfy-load-button', ".cute-comfy-top-bar-left", "cute-comfy-button", true);
     btn.innerHTML = `<i class="fas fa-folder-open"></i> Load`;
     btn.title = "Upload a workflow JSON file. Will replace the current workflow.";
-    btn = moveElement('#comfy-clear-button', ".cute-comfy-top-bar-left", "cute-comfy-button", true);
-    btn.innerHTML = `<i class="fas fa-trash"></i> Clear`;
-    btn.title = "Clears the canvas. Be sure to save your workflow first!";
+    btn = moveElement('#comfy-refresh-button', ".cute-comfy-top-bar-left", "cute-comfy-button", true);
+    btn.innerHTML = `<i class="fas fa-sync"></i> Refresh`;
+    btn.title = "Refreshes  metadatata (selection lists, etc) inside nodes.";
 
     // Append the menu
     document.querySelector(".cute-comfy-top-bar-left").appendChild(menu);
@@ -517,15 +533,15 @@ async function initCuteness() {
     btn = moveElement('#comfy-dev-save-api-button', ".cute-comfy-pop-menu", "cute-comfy-button", true);
     btn.innerHTML = `<i class="fas fa-code"></i> Save (API)`;
     btn.title = "Download the current workflow in API (JSON) format.";
-    btn = moveElement('#comfy-refresh-button', ".cute-comfy-pop-menu", "cute-comfy-button", true);
-    btn.innerHTML = `<i class="fas fa-sync"></i> Refresh`;
-    btn.title = "Refreshes  metadatata (selection lists, etc) inside nodes.";
     btn = moveElement('#comfy-clipspace-button', ".cute-comfy-pop-menu", "cute-comfy-button", true);
     btn.innerHTML = `<i class="fas fa-vector-square"></i> Clip Space`;
     btn.title = "Inspect any images currently in clip space.";
     btn = moveElement('#comfy-load-default-button', ".cute-comfy-pop-menu", "cute-comfy-button", true);
     btn.innerHTML = `<i class="fas fa-undo"></i> Load Default`;
     btn.title = "Loads the default workflow.";
+    btn = moveElement('#comfy-clear-button', ".cute-comfy-pop-menu", "cute-comfy-button", true);
+    btn.innerHTML = `<i class="fas fa-trash"></i> Clear Canvas`;
+    btn.title = "Clears the canvas. Be sure to save your workflow first!";
 
     // Append the menu button
     btn = document.createElement("button");
