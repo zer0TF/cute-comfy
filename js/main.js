@@ -616,6 +616,8 @@ function waitForElementVisibility(selector, timeout = 5000, all = false, expr = 
     }
 }
 
+var cute_comfy_menu_init = false;
+
 async function initCuteness() {
     console.group('💜 Cute Comfy 💜 ');
     console.log("🟣 I'm going to make things CUTE! ^_^");
@@ -775,6 +777,8 @@ async function initCuteness() {
     spacer.classList.add('cute-comfy-spacer');
     document.querySelectorAll('.cute-comfy-list')[1].after(spacer);
 
+    let bool = 
+
     function applyMutableChanges(mutations, observer, selector)
     {
         observer.disconnect();
@@ -875,6 +879,81 @@ async function initCuteness() {
             }    
         }
 
+        // If we have not already, attempt one-time menu init.
+        if (!cute_comfy_menu_init)
+        {
+            cute_comfy_menu_init = true;
+            
+            // Inside .cute-comfy-menu, find a button with the innertext of "Manage"
+            var manageBtn = Array.from(document.querySelectorAll(".cute-comfy-menu button")).filter((btn) => btn.innerText.toLowerCase().includes("manager"));
+            if (manageBtn.length > 0)
+            {
+                // Install a click handler on the button
+                manageBtn[0].addEventListener("click", (e) =>
+                {
+                    setTimeout(() =>
+                    {
+                        waitForElementVisibility(".comfy-modal-content button", 5000, true);
+
+                        // Add icons to the buttons on the main menu.
+                        // Loop through each button element inside .comfy-modal-content
+                        var buttons = document.querySelectorAll(".comfy-modal .comfy-modal-content button");
+                        for (let i = 0; i < buttons.length; i++)
+                        {
+                            // Switch on the button's inner text
+                            switch (buttons[i].innerText.trim().toLowerCase())
+                            {
+                                case "install custom nodes":
+                                    buttons[i].innerHTML = `<i class="fas fa-cubes"></i> Manage Custom Nodes`;
+                                    buttons[i].title = "Opens the node manager where you can install, update, and manage custom nodes.";
+                                    break;
+                                case "install missing custom nodes":
+                                    buttons[i].innerHTML = `<i class="fas fa-file-circle-question"></i> Install Missing Custom Nodes`;
+                                    buttons[i].title = "If your workflow has any missing nodes, this will attempt to install them.";
+                                    break;
+                                case "install models":
+                                    buttons[i].innerHTML = `<i class="fas fa-circle-nodes"></i> Install Models`;
+                                    buttons[i].title = "Browse and install models (checkpoints, upscalers, embeddings, etc).";
+                                    break;
+                                case "update all":
+                                    buttons[i].innerHTML = `<i class="fas fa-angles-up"></i> Update ComfyUI + Extensions`;
+                                    buttons[i].title = "Updates everything (ComfyUI and any installed extensions).";
+                                    break;
+                                case "update comfyui":
+                                    buttons[i].innerHTML = `<i class="fas fa-angle-up"></i> Update ComfyUI`;
+                                    buttons[i].title = "Updates ComfyUI.";
+                                    break;
+                                case "fetch updates":
+                                    buttons[i].innerHTML = `<i class="fas fa-refresh"></i> Check for Updates`;
+                                    buttons[i].title = "Attempts to fetch any updates for any installed custom extensions.";
+                                    break;
+                                case "alternatives of a1111":
+                                    buttons[i].innerHTML = `<i class="fas fa-person-circle-question"></i> Custom Node Alternatives to A1111`;
+                                    buttons[i].title = "View a filtered list of custom nodes that substitutes functionality in Automatic1111's Stable Diffusion Web UI.";
+                                    break;
+                                case "comfyui community manual":
+                                    buttons[i].innerHTML = `<i class="fas fa-globe"></i> ComfyUI Community Manual <i class="fas fa-up-right-from-square fa-2xs"></i>`;
+                                    buttons[i].title = "Open the ComfyUI documentation.";
+                                    break;
+                                case "comfyui workflow gallery":
+                                    buttons[i].innerHTML = `<i class="fas fa-table-cells"></i> ComfyUI Workflow Gallery <i class="fas fa-up-right-from-square fa-2xs"></i>`;
+                                    buttons[i].title = "Open the ComfyUI example workflow gallery.";
+                                    break;
+                                case "comfyui nodes info":
+                                    buttons[i].innerHTML = `<i class="fas fa-square-share-nodes"></i> ComfyUI Nodes Info <i class="fas fa-up-right-from-square fa-2xs"></i>`;
+                                    buttons[i].title = "Open the documentation for various node types.";
+                                    break;
+                                case "close":
+                                    buttons[i].innerHTML = `<i class="fas fa-xmark"></i> Close`;
+                                    buttons[i].title = "Close this popup.";
+                                    break;
+                            }
+                        }
+                    }, 10);
+                });
+            }
+        }
+
         // Start observing again
         observer.observe(document.querySelector(selector), {
             childList: true,
@@ -893,77 +972,6 @@ async function initCuteness() {
         childList: true,
         subtree: true
     });
-
-    waitForElementVisibility("//div[contains(concat(' ', @class, ' '), ' comfy-menu ')]/button[contains(., 'Manager')]", 5000, false, true);
-
-    // Inside .cute-comfy-menu, find a button with the innertext of "Manage"
-    var manageBtn = Array.from(document.querySelectorAll(".cute-comfy-menu button")).filter((btn) => btn.innerText.toLowerCase().includes("manager"));
-    if (manageBtn.length > 0)
-    {
-        // Install a click handler on the button
-        manageBtn[0].addEventListener("click", (e) =>
-        {
-            setTimeout(() =>
-            {
-                waitForElementVisibility(".comfy-modal-content button", 5000, true);
-
-                // Add icons to the buttons on the main menu.
-                // Loop through each button element inside .comfy-modal-content
-                var buttons = document.querySelectorAll(".comfy-modal .comfy-modal-content button");
-                for (let i = 0; i < buttons.length; i++)
-                {
-                    // Switch on the button's inner text
-                    switch (buttons[i].innerText.trim().toLowerCase())
-                    {
-                        case "install custom nodes":
-                            buttons[i].innerHTML = `<i class="fas fa-cubes"></i> Manage Custom Nodes`;
-                            buttons[i].title = "Opens the node manager where you can install, update, and manage custom nodes.";
-                            break;
-                        case "install missing custom nodes":
-                            buttons[i].innerHTML = `<i class="fas fa-file-circle-question"></i> Install Missing Custom Nodes`;
-                            buttons[i].title = "If your workflow has any missing nodes, this will attempt to install them.";
-                            break;
-                        case "install models":
-                            buttons[i].innerHTML = `<i class="fas fa-circle-nodes"></i> Install Models`;
-                            buttons[i].title = "Browse and install models (checkpoints, upscalers, embeddings, etc).";
-                            break;
-                        case "update all":
-                            buttons[i].innerHTML = `<i class="fas fa-angles-up"></i> Update ComfyUI + Extensions`;
-                            buttons[i].title = "Updates everything (ComfyUI and any installed extensions).";
-                            break;
-                        case "update comfyui":
-                            buttons[i].innerHTML = `<i class="fas fa-angle-up"></i> Update ComfyUI`;
-                            buttons[i].title = "Updates ComfyUI.";
-                            break;
-                        case "fetch updates":
-                            buttons[i].innerHTML = `<i class="fas fa-refresh"></i> Check for Updates`;
-                            buttons[i].title = "Attempts to fetch any updates for any installed custom extensions.";
-                            break;
-                        case "alternatives of a1111":
-                            buttons[i].innerHTML = `<i class="fas fa-person-circle-question"></i> Custom Node Alternatives to A1111`;
-                            buttons[i].title = "View a filtered list of custom nodes that substitutes functionality in Automatic1111's Stable Diffusion Web UI.";
-                            break;
-                        case "comfyui community manual":
-                            buttons[i].innerHTML = `<i class="fas fa-globe"></i> ComfyUI Community Manual <i class="fas fa-up-right-from-square fa-2xs"></i>`;
-                            buttons[i].title = "Open the ComfyUI documentation.";
-                            break;
-                        case "comfyui workflow gallery":
-                            buttons[i].innerHTML = `<i class="fas fa-table-cells"></i> ComfyUI Workflow Gallery <i class="fas fa-up-right-from-square fa-2xs"></i>`;
-                            buttons[i].title = "Open the ComfyUI example workflow gallery.";
-                            break;
-                        case "comfyui nodes info":
-                            buttons[i].innerHTML = `<i class="fas fa-square-share-nodes"></i> ComfyUI Nodes Info <i class="fas fa-up-right-from-square fa-2xs"></i>`;
-                            buttons[i].title = "Open the documentation for various node types.";
-                            break;
-                        case "close":
-                            buttons[i].innerHTML = `<i class="fas fa-xmark"></i> Close`;
-                            buttons[i].title = "Close this popup.";
-                            break;
-                    }
-                }
-            }, 10);
-        });
-    }
 
     console.log("🟣 ALL DONE! ^_^");
     console.groupEnd();
