@@ -61,6 +61,7 @@ const cuteCustomStyles = `
     background: rgb(119, 86, 148);
     background: linear-gradient(135deg, rgba(119, 86, 148, 1) 20%, rgba(36, 26, 45, 1) 100%);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
 .cute-comfy-top-bar-left
@@ -160,6 +161,8 @@ div.cute-comfy-menu
     width: var(--cute-comfy-sidebar-width);
 
     padding: 0 !important;
+
+    z-index: 2;
 }
 
 div.cute-comfy-menu button,
@@ -362,7 +365,7 @@ button:hover > .cute-hover-green
     background-color: var(--cute-comfy-sidebar-bg);
     border: 1px solid var(--cute-comfy-modal-border);
     box-shadow: 4px 4px 18px 5px rgba(0, 0, 0, 0.7);
-    border-radius: 3px;
+    border-radius: 5px;
     
     font-family: var(--cute-comfy-fonts);
     text-align: center;
@@ -417,9 +420,7 @@ button:hover > .cute-hover-green
 .comfy-modal .comfy-modal-content > tr:first-of-type
 {
     background-color: unset !important;
-    padding: 0 !important;
     margin-top: 1rem !important;
-    height: unset !important;
 }
 
 .comfy-modal .comfy-modal-content button
@@ -439,6 +440,11 @@ button:hover > .cute-hover-green
 {
     background-color: var(--cute-comfy-button-bg) !important;
     color: #111;
+}
+
+.comfy-modal .comfy-modal-content button:hover p
+{
+    color: #111 !important;
 }
 
 .comfy-modal .comfy-modal-content button > svg
@@ -461,6 +467,23 @@ button:hover > .cute-hover-green
 {
     background-color: white;
     color: #222;
+}
+
+#cm-manager-dialog
+{
+    /* Fix the height being too small. */
+    min-height: 600px;
+}
+
+#cm-notice-board
+{
+    min-height: 400px;
+}
+
+/* Overrides for ... dropdowns? */
+#cm-manual-button, #workflowgallery-button
+{
+    background-color: #564565 !important;
 }
 
 /* Main Settings Dialog */
@@ -508,6 +531,11 @@ button:hover > .cute-hover-green
     font-size: 14px;
 }
 
+#comfy-settings-dialog tr td label.comfy-tooltip-indicator
+{
+    cursor: help;
+}
+
 #comfy-settings-dialog table > caption,
 #comfy-settings-dialog table > button
 {
@@ -525,6 +553,19 @@ button:hover > .cute-hover-green
     {
         top: var(--cute-comfy-bar-height) !important;
     }
+}
+
+/* Overrides text boxes having a weird z-index by default... */
+textarea.comfy-multiline-input
+{
+    z-index: 0 !important;
+    text-align: left !important;
+}
+
+legend.cm-experimental-legend
+{
+    font-size: 11px;
+    line-height: 2;
 }
 
 /* Custom addons */
@@ -921,23 +962,15 @@ async function initCuteness() {
                                     buttons[i].innerHTML = `<i class="fas fa-angle-up"></i> Update ComfyUI`;
                                     buttons[i].title = "Updates ComfyUI.";
                                     break;
-                                case "fetch updates":
-                                    buttons[i].innerHTML = `<i class="fas fa-refresh"></i> Check for Updates`;
+                                case "check for updates":
+                                    buttons[i].innerHTML = `<i class="fas fa-cloud-arrow-down"></i> Check for Updates`;
                                     buttons[i].title = "Attempts to fetch any updates for any installed custom extensions.";
                                     break;
                                 case "alternatives of a1111":
                                     buttons[i].innerHTML = `<i class="fas fa-person-circle-question"></i> Custom Node Alternatives to A1111`;
                                     buttons[i].title = "View a filtered list of custom nodes that substitutes functionality in Automatic1111's Stable Diffusion Web UI.";
                                     break;
-                                case "comfyui community manual":
-                                    buttons[i].innerHTML = `<i class="fas fa-globe"></i> ComfyUI Community Manual <i class="fas fa-up-right-from-square fa-2xs"></i>`;
-                                    buttons[i].title = "Open the ComfyUI documentation.";
-                                    break;
-                                case "comfyui workflow gallery":
-                                    buttons[i].innerHTML = `<i class="fas fa-table-cells"></i> ComfyUI Workflow Gallery <i class="fas fa-up-right-from-square fa-2xs"></i>`;
-                                    buttons[i].title = "Open the ComfyUI example workflow gallery.";
-                                    break;
-                                case "comfyui nodes info":
+                                case "nodes info":
                                     buttons[i].innerHTML = `<i class="fas fa-square-share-nodes"></i> ComfyUI Nodes Info <i class="fas fa-up-right-from-square fa-2xs"></i>`;
                                     buttons[i].title = "Open the documentation for various node types.";
                                     break;
