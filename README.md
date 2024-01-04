@@ -123,6 +123,7 @@ watcher:
   folders:
   - Z:\Path\To\Your\Comfy\Output\Folder
   overwrite: false
+  keep_workflow: false
   verbose: false
   write_suffix: __a1
 ```
@@ -133,6 +134,7 @@ Modify these settings to suit your needs!
 |---------|---------|-------------|
 | `enabled` | `true` | If the file watcher feature is enabled (or disabled). |
 | `overwrite` | `false` | If `true`, the original file that Comfy writes will be overwritten. **NOTE:** Comfy workflow metadata is lost when converting to Civitai-compatible format, so leave this setting `false` if you want to retain copies of your workflow inside your image files! |
+| `keep_workflow` | `false` | If `true`, the original ComfyUI workflow metadata will be retained in the file, otherwise it will be removed and only the Automatic1111-compatible metadata will remain. This setting applies to both overwritten and new files. |
 | `write_suffix` | `__a1` | The suffix to add to the image file when saving a copy. Has no effect if `overwrite` is `true`. |
 | `verbose` | `false` | If `true`, prints lots more info to the console when it processes an image. |
 | `folders` | *A nonexistant sample path you must change.* | Add one or more folders that Cute Comfy should watch for new files. The files written into this folder must contain Comfy workflow metadata, so if you are using a custom saving node, ensure that you are including the metadata in the images written here. Multiple directories are supported and can be watched at the same time. |

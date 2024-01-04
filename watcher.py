@@ -135,6 +135,11 @@ def update_metadata(file, config_dict):
     with Image.open(file) as img:
         metadata = img.info
 
+        if 'parameters' in metadata:
+            if 'Seed' in metadata['parameters'] or 'Steps' in metadata['parameters']:
+                cuteprint(f'👀 This file already has Civitai-compatible metadata, skipping: {file}') if Verbose else None
+                return
+
         if not metadata or 'workflow' not in metadata:
             cuteprint(f'👀 This file has no metadata, can\'t do anything: {file}') if Verbose else None
             return
@@ -171,8 +176,13 @@ def update_metadata(file, config_dict):
 Negative prompt: {prompt_negative if prompt_negative else ''}
 {f'Steps: {steps}, ' if steps else ''}{f'Sampler: {sampler}, ' if sampler else ''}{f'CFG scale: {cfg}, ' if cfg else ''}{f'Seed: {seed}, ' if seed else ''}{f'AutoConverter: Cute Comfy, '}{f'Hashes: {hashes_json}'}
 '''
+        prev_metadata = metadata
         metadata = PngInfo()
         metadata.add_text("parameters", new_metadata)
+
+        if 'keep_workflow' in config_dict['watcher'] and config_dict['watcher']['keep_workflow']:
+            metadata.add_text("propmt", prev_metadata['prompt'])
+            metadata.add_text("workflow", prev_metadata['workflow'])
 
         if config_dict['watcher']['overwrite']:
             img.save(file, pnginfo=metadata)
