@@ -989,8 +989,8 @@ async function initCuteness() {
                                     buttons[i].innerHTML = `<i class="fas fa-cloud-arrow-down"></i> Check for Updates`;
                                     buttons[i].title = "Attempts to fetch any updates for any installed custom extensions.";
                                     break;
-                                case "custom node alternatives to a1111":
-                                    buttons[i].innerHTML = `<i class="fas fa-person-circle-question"></i> Custom Node Alternatives to A1111`;
+                                case "alternatives of a1111":
+                                    buttons[i].innerHTML = `<i class="fas fa-person-circle-question"></i> Alternatives of A1111`;
                                     buttons[i].title = "View a filtered list of custom nodes that substitutes functionality in Automatic1111's Stable Diffusion Web UI.";
                                     break;
                                 case "nodes info":
