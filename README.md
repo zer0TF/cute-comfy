@@ -68,7 +68,7 @@ We map the following:
 We support:
 
 * ComfyUI's vanilla **KSampler**
-* [Efficiency Nodes](https://github.com/LucianoCirino/efficiency-nodes-comfyui)' **KSampler (Efficient)**
+* [Efficiency Nodes](https://github.com/jags111/efficiency-nodes-comfyui)' **KSampler (Efficient)**
 
 💡 **Tip:** We can't always figure out where your stuff is inside of your Comfy workflow - Comfy is crazy! You could have 10 separate positive prompts, 4 model merges, and 5 different sampler steps!
 
@@ -82,8 +82,8 @@ There are some ways you can provide "hints" to the conversion script as to where
 |-----------------|--------------------------|
 | Model           | Use the **Civitai Checkpoint Loader** node.                    |
 | LoRA(s)         | Use the **Civitai LoRA Loader** node.                          |
-| Positive Prompt | Set the title of your **CLIP Text Encode** node to: `Positive` |
-| Negative Prompt | Set the title of your **CLIP Text Encode** node to: `Negative` |
+| Positive Prompt | Set the title of your **CLIP Text Encode** or **Primitive** node to: `Positive` |
+| Negative Prompt | Set the title of your **CLIP Text Encode** or **Primitive** node to: `Negative` |
 | Seed, CFG, Sampler/Scheduler, Steps | Use a **KSampler** or **KSampler (Efficient)** node. If you have more than one sampler, set the title of your primary/base one to: `Sampler` |
 
 ### UI Overhaul for ComfyUI
