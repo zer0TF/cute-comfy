@@ -447,6 +447,19 @@ button:hover > .cute-hover-green
     color: #111 !important;
 }
 
+.comfy-modal .comfy-modal-content button p
+{
+    font-size: unset !important;
+    display: inline-block;
+    line-height: 1.1;
+}
+
+.comfy-modal .comfy-modal-content button p p
+{
+    margin-left: 0.5rem !important;
+    margin-top: 2px !important;
+}
+
 .comfy-modal .comfy-modal-content button > svg
 {
     margin-right: 0.5rem;
@@ -475,9 +488,10 @@ button:hover > .cute-hover-green
     min-height: 600px;
 }
 
-#cm-notice-board
+.cm-notice-board
 {
     min-height: 400px;
+    text-align: left;
 }
 
 /* Overrides for ... dropdowns? */
@@ -559,7 +573,6 @@ button:hover > .cute-hover-green
 textarea.comfy-multiline-input
 {
     z-index: 0 !important;
-    text-align: left !important;
 }
 
 legend.cm-experimental-legend
@@ -954,6 +967,16 @@ async function initCuteness() {
                                     buttons[i].innerHTML = `<i class="fas fa-circle-nodes"></i> Install Models`;
                                     buttons[i].title = "Browse and install models (checkpoints, upscalers, embeddings, etc).";
                                     break;
+                                case "install via git url":
+                                    buttons[i].innerHTML = `<i class="fas fa-code-fork"></i> Install via Git URL`;
+                                    buttons[i].title = "Browse and install models (checkpoints, upscalers, embeddings, etc).";
+                                    break;
+                                case "snapshot manager":
+                                    buttons[i].innerHTML = `<i class="fas fa-folder-tree"></i> Snapshot Manager`;
+                                    break;
+                                case "install pip packages":
+                                    buttons[i].innerHTML = `<i class="fas fa-boxes-packing"></i> Install PIP Packages`;
+                                    break;
                                 case "update all":
                                     buttons[i].innerHTML = `<i class="fas fa-angles-up"></i> Update ComfyUI + Extensions`;
                                     buttons[i].title = "Updates everything (ComfyUI and any installed extensions).";
@@ -962,11 +985,11 @@ async function initCuteness() {
                                     buttons[i].innerHTML = `<i class="fas fa-angle-up"></i> Update ComfyUI`;
                                     buttons[i].title = "Updates ComfyUI.";
                                     break;
-                                case "check for updates":
+                                case "fetch updates":
                                     buttons[i].innerHTML = `<i class="fas fa-cloud-arrow-down"></i> Check for Updates`;
                                     buttons[i].title = "Attempts to fetch any updates for any installed custom extensions.";
                                     break;
-                                case "alternatives of a1111":
+                                case "custom node alternatives to a1111":
                                     buttons[i].innerHTML = `<i class="fas fa-person-circle-question"></i> Custom Node Alternatives to A1111`;
                                     buttons[i].title = "View a filtered list of custom nodes that substitutes functionality in Automatic1111's Stable Diffusion Web UI.";
                                     break;
